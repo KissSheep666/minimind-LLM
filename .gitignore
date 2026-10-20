@@ -4,3 +4,10 @@ __pycache__/
 out
 website/
 docs-minimind/
+
+# 本地环境与下载产物（体积大，不入库）
+.venv/
+minimind-3/
+minimind-3-moe/
+checkpoints/
+dataset/*.jsonl
