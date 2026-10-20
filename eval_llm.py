@@ -27,7 +27,9 @@ def init_model(args):
     else:
         model = AutoModelForCausalLM.from_pretrained(args.load_from, trust_remote_code=True)
     get_model_params(model, model.config)
-    return model.half().eval().to(args.device), tokenizer
+    # CPU 不支持 fp16 的大部分算子，强制使用 fp32
+    dtype = torch.float32 if str(args.device).startswith('cpu') else torch.half
+    return model.to(dtype).eval().to(args.device), tokenizer
 
 def main():
     parser = argparse.ArgumentParser(description="MiniMind模型推理与对话")
